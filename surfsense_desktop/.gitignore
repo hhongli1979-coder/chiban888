@@ -35,3 +35,6 @@ Thumbs.db
 *.AppImage
 *.deb
 *.rpm
+
+# Temporary icon files (keep final icons)
+assets/icon-*.png
