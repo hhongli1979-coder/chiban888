@@ -151,11 +151,7 @@ export const useSearchSourceConnectors = (lazy: boolean = false, searchSpaceId?:
 				setIsLoading(false);
 			}
 		},
-		[
-			isLoaded,
-			lazy, // Update connector source items when connectors change
-			updateConnectorSourceItems,
-		]
+		[isLoaded, lazy, updateConnectorSourceItems]
 	);
 
 	useEffect(() => {
