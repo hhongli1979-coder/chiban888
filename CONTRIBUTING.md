@@ -125,6 +125,26 @@ Use descriptive branch names:
 - **Ensure CI passes** before requesting review
 
 
+## 📦 Package Publishing (For Maintainers)
+
+SurfSense uses GitHub Packages to distribute packages. As a maintainer, here's what you need to know:
+
+### Publishing a New Version
+
+1. **Update version numbers** in:
+   - `surfsense_web/package.json`
+   - `surfsense_browser_extension/package.json`
+   - `surfsense_backend/pyproject.toml`
+
+2. **Create a release** on GitHub (tag format: `v0.0.9`)
+
+3. **Packages are automatically published** via GitHub Actions
+
+For detailed instructions, see:
+- [GitHub Packages Guide](docs/GITHUB_PACKAGES.md)
+- [CI/CD Documentation](docs/CI_CD.md)
+- [Quick Reference](docs/QUICK_REFERENCE.md)
+
 ## 🔍 Code Review Process
 
 1. **Automated checks** must pass (CI/CD pipeline)
