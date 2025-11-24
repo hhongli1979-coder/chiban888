@@ -1,0 +1,15 @@
+# GitHub Packages NPM Registry Configuration
+# 
+# This file configures npm to use GitHub Packages for @hhongli1979-coder scoped packages
+# 
+# Setup instructions:
+# 1. Copy this file to your project root as .npmrc
+# 2. Replace YOUR_GITHUB_TOKEN with your Personal Access Token
+#    - Create token at: https://github.com/settings/tokens
+#    - Required scope: read:packages (and write:packages for publishing)
+# 
+# Security note: Never commit this file with your actual token to version control!
+# Add .npmrc to your .gitignore file
+
+@hhongli1979-coder:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN

@@ -142,6 +142,26 @@ Check out our public roadmap and contribute your ideas or feedback:
 **View the Roadmap:** [SurfSense Roadmap on GitHub Projects](https://github.com/users/MODSetter/projects/2)
 
 
+## 📦 GitHub Packages
+
+SurfSense packages are available via GitHub Packages for easy installation and deployment:
+
+- **Docker Images**: Pre-built container images for backend and frontend
+- **NPM Packages**: Frontend components and browser extension
+- **Python Package**: Backend API library (prepared for future use)
+
+📖 **[Complete GitHub Packages Guide](docs/GITHUB_PACKAGES.md)** - Installation instructions, authentication, and usage examples
+
+### Quick Start with Docker Images
+
+```bash
+# Pull and run the latest backend
+docker pull ghcr.io/hhongli1979-coder/surfsense_backend:latest
+
+# Pull and run the latest frontend
+docker pull ghcr.io/hhongli1979-coder/surfsense_web:latest
+```
+
 ## How to get started?
 
 ### Installation Options
@@ -158,6 +178,7 @@ SurfSense provides three options to get started:
    - Supports environment variable customization via `.env` file
    - Flexible deployment options (full stack or core services only)
    - No need to manually edit configuration files between environments
+   - Use pre-built images from GitHub Packages or build locally
 
 3. **[Manual Installation](https://www.surfsense.net/docs/manual-installation)** - For users who prefer more control over their setup or need to customize their deployment.
 

@@ -149,6 +149,26 @@ https://github.com/user-attachments/assets/a0a16566-6967-4374-ac51-9b3e07fbecd7
 **查看路线图：** [SurfSense 路线图 (GitHub Projects)](https://github.com/users/MODSetter/projects/2)
 
 
+## 📦 GitHub Packages
+
+SurfSense 通过 GitHub Packages 提供软件包，便于安装和部署：
+
+- **Docker 镜像**: 预构建的后端和前端容器镜像
+- **NPM 包**: 前端组件和浏览器扩展
+- **Python 包**: 后端 API 库（准备中）
+
+📖 **[完整的 GitHub Packages 指南](docs/GITHUB_PACKAGES.md)** - 安装说明、身份验证和使用示例
+
+### Docker 镜像快速开始
+
+```bash
+# 拉取并运行最新的后端
+docker pull ghcr.io/hhongli1979-coder/surfsense_backend:latest
+
+# 拉取并运行最新的前端
+docker pull ghcr.io/hhongli1979-coder/surfsense_web:latest
+```
+
 ## 如何开始？
 
 ### 安装选项
@@ -165,6 +185,7 @@ SurfSense 提供三种入门方式：
    - 支持通过 `.env` 文件自定义环境变量
    - 灵活的部署选项（完整堆栈或仅核心服务）
    - 无需在环境之间手动编辑配置文件
+   - 使用 GitHub Packages 的预构建镜像或本地构建
 
 3. **[手动安装](https://www.surfsense.net/docs/manual-installation)** - 适合希望对设置有更多控制或需要自定义部署的用户。
 
