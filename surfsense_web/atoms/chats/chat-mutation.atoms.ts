@@ -74,9 +74,7 @@ export const updateChatMutationAtom = atomWithMutation((get) => {
 				cacheKeys.chats.globalQueryParams(chatsQueryParams),
 				(oldData: Chat[] | undefined) => {
 					if (!oldData) return oldData;
-					return oldData.map((chat) =>
-						chat.id === request.id ? { ...chat, ...request } : chat
-					);
+					return oldData.map((chat) => (chat.id === request.id ? { ...chat, ...request } : chat));
 				}
 			);
 		},

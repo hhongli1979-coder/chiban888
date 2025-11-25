@@ -47,7 +47,7 @@ export function AppSidebarProvider({
 	const tCommon = useTranslations("common");
 	const setChatsQueryParams = useSetAtom(globalChatsQueryParamsAtom);
 	const { data: chats, error: chatError, isLoading: isLoadingChats } = useAtomValue(chatsAtom);
-	const [{ isPending: isDeletingChat, mutateAsync: deleteChat, error: deleteError }] =
+	const [{ isPending: isDeletingChat, mutateAsync: deleteChat, error: _deleteError }] =
 		useAtom(deleteChatMutationAtom);
 
 	useEffect(() => {

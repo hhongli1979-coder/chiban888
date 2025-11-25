@@ -25,7 +25,7 @@ export function normalizeListResponse<T>(payload: any): ListResponse<T> {
 		if (Array.isArray(payload)) {
 			return { items: payload as T[], total: (payload as T[]).length };
 		}
-	} catch (e) {
+	} catch {
 		// fallthrough to default
 	}
 

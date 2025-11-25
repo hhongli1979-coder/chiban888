@@ -496,8 +496,7 @@ export default function ChatsPageClient({ searchSpaceId }: ChatsPageClientProps)
 							<span>Rename Chat</span>
 						</DialogTitle>
 						<DialogDescription>
-							Enter a new name for{" "}
-							<span className="font-medium">{chatToRename?.title}</span>
+							Enter a new name for <span className="font-medium">{chatToRename?.title}</span>
 						</DialogDescription>
 					</DialogHeader>
 					<div className="py-4">
