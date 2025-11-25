@@ -8,10 +8,20 @@ import { ThemeTogglerComponent } from "@/components/theme/theme-toggle";
 import { useGithubStars } from "@/hooks/use-github-stars";
 import { cn } from "@/lib/utils";
 
+interface NavItem {
+	name: string;
+	link: string;
+}
+
+interface NavProps {
+	navItems: NavItem[];
+	isScrolled: boolean;
+}
+
 export const Navbar = () => {
 	const [isScrolled, setIsScrolled] = useState(false);
 
-	const navItems = [
+	const navItems: NavItem[] = [
 		// { name: "Home", link: "/" },
 		{ name: "Pricing", link: "/pricing" },
 		// { name: "Sign In", link: "/login" },
@@ -38,7 +48,7 @@ export const Navbar = () => {
 	);
 };
 
-const DesktopNav = ({ navItems, isScrolled }: any) => {
+const DesktopNav = ({ navItems, isScrolled }: NavProps) => {
 	const [hovered, setHovered] = useState<number | null>(null);
 	const { compactFormat: githubStars, loading: loadingGithubStars } = useGithubStars();
 	return (
@@ -58,7 +68,7 @@ const DesktopNav = ({ navItems, isScrolled }: any) => {
 				<span className="dark:text-white/90 text-gray-800 text-lg font-bold">SurfSense</span>
 			</div>
 			<div className="hidden flex-1 flex-row items-center justify-center space-x-2 text-sm font-medium text-zinc-600 transition duration-200 hover:text-zinc-800 lg:flex lg:space-x-2">
-				{navItems.map((navItem: any, idx: number) => (
+				{navItems.map((navItem, idx) => (
 					<Link
 						onMouseEnter={() => setHovered(idx)}
 						onMouseLeave={() => setHovered(null)}
@@ -112,7 +122,7 @@ const DesktopNav = ({ navItems, isScrolled }: any) => {
 	);
 };
 
-const MobileNav = ({ navItems, isScrolled }: any) => {
+const MobileNav = ({ navItems, isScrolled }: NavProps) => {
 	const [open, setOpen] = useState(false);
 	const { compactFormat: githubStars, loading: loadingGithubStars } = useGithubStars();
 
@@ -155,7 +165,7 @@ const MobileNav = ({ navItems, isScrolled }: any) => {
 							exit={{ opacity: 0 }}
 							className="absolute inset-x-0 top-16 z-20 flex w-full flex-col items-start justify-start gap-4 rounded-lg bg-white/80 backdrop-blur-md border border-white/20 shadow-lg px-4 py-8 dark:bg-neutral-950/80 dark:border-neutral-800/50"
 						>
-							{navItems.map((navItem: any, idx: number) => (
+							{navItems.map((navItem, idx) => (
 								<Link
 									key={`link=${idx}`}
 									href={navItem.link}

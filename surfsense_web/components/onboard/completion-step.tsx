@@ -1,15 +1,6 @@
 "use client";
 
-import {
-	ArrowRight,
-	Bot,
-	Brain,
-	CheckCircle,
-	FileText,
-	MessageSquare,
-	Sparkles,
-	Zap,
-} from "lucide-react";
+import { ArrowRight, CheckCircle, FileText, MessageSquare } from "lucide-react";
 import { motion } from "motion/react";
 import { useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
@@ -25,16 +16,11 @@ export function CompletionStep({ searchSpaceId }: CompletionStepProps) {
 	const router = useRouter();
 	const { llmConfigs } = useLLMConfigs(searchSpaceId);
 	const { globalConfigs } = useGlobalLLMConfigs();
-	const { preferences } = useLLMPreferences(searchSpaceId);
+	// Preferences are fetched but not used in display - kept for future use
+	useLLMPreferences(searchSpaceId);
 
 	// Combine global and user-specific configs
 	const allConfigs = [...globalConfigs, ...llmConfigs];
-
-	const assignedConfigs = {
-		long_context: allConfigs.find((c) => c.id === preferences.long_context_llm_id),
-		fast: allConfigs.find((c) => c.id === preferences.fast_llm_id),
-		strategic: allConfigs.find((c) => c.id === preferences.strategic_llm_id),
-	};
 
 	return (
 		<div className="space-y-8">

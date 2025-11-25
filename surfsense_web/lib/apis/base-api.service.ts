@@ -1,4 +1,3 @@
-import { th } from "date-fns/locale";
 import type z from "zod";
 import { AppError, AuthenticationError, AuthorizationError, NotFoundError } from "../error";
 
@@ -15,7 +14,7 @@ export type RequestOptions = {
 	headers?: Record<string, string>;
 	contentType?: "application/json" | "application/x-www-form-urlencoded";
 	signal?: AbortSignal;
-	body?: any;
+	body?: unknown;
 	responseType?: ResponseType;
 	// Add more options as needed
 };

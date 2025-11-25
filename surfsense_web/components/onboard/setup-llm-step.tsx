@@ -236,7 +236,7 @@ export function SetupLLMStep({
 								role assignment section below.
 							</p>
 							<p className="text-sm">
-								Or expand "Add LLM Provider" to add your own custom configurations.
+								Or expand &quot;Add LLM Provider&quot; to add your own custom configurations.
 							</p>
 						</div>
 					</AlertDescription>

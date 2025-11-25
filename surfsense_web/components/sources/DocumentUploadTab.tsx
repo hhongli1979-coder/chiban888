@@ -189,11 +189,12 @@ export function DocumentUploadTab({ searchSpaceId }: DocumentUploadTabProps) {
 			});
 
 			router.push(`/dashboard/${searchSpaceId}/documents`);
-		} catch (error: any) {
+		} catch (error: unknown) {
 			setIsUploading(false);
 			setUploadProgress(0);
+			const errorMessage = error instanceof Error ? error.message : String(error);
 			toast(t("upload_error"), {
-				description: `${t("upload_error_desc")}: ${error.message}`,
+				description: `${t("upload_error_desc")}: ${errorMessage}`,
 			});
 		}
 	};

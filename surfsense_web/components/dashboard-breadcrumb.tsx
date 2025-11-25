@@ -3,7 +3,7 @@
 import { useAtomValue } from "jotai";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
-import React, { useEffect } from "react";
+import React from "react";
 import { activeChatAtom } from "@/atoms/chats/chat-query.atoms";
 import {
 	Breadcrumb,

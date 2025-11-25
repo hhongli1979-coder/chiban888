@@ -1,14 +1,11 @@
 "use client";
 
 import NumberFlow from "@number-flow/react";
-import confetti from "canvas-confetti";
 import { Check, Star } from "lucide-react";
 import { motion } from "motion/react";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { buttonVariants } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { cn } from "@/lib/utils";
 
@@ -35,38 +32,10 @@ export function Pricing({
 	title = "Simple, Transparent Pricing",
 	description = "Choose the plan that works for you\nAll plans include access to our platform, lead generation tools, and dedicated support.",
 }: PricingProps) {
-	const [isMonthly, setIsMonthly] = useState(true);
+	// isMonthly is currently only used in display
+	// The billing toggle is commented out for now but the state is kept for future use
+	const [isMonthly] = useState(true);
 	const isDesktop = useMediaQuery("(min-width: 768px)");
-	const switchRef = useRef<HTMLButtonElement>(null);
-
-	const handleToggle = (checked: boolean) => {
-		setIsMonthly(!checked);
-		if (checked && switchRef.current) {
-			const rect = switchRef.current.getBoundingClientRect();
-			const x = rect.left + rect.width / 2;
-			const y = rect.top + rect.height / 2;
-
-			confetti({
-				particleCount: 50,
-				spread: 60,
-				origin: {
-					x: x / window.innerWidth,
-					y: y / window.innerHeight,
-				},
-				colors: [
-					"hsl(var(--primary))",
-					"hsl(var(--accent))",
-					"hsl(var(--secondary))",
-					"hsl(var(--muted))",
-				],
-				ticks: 200,
-				gravity: 1.2,
-				decay: 0.94,
-				startVelocity: 30,
-				shapes: ["circle"],
-			});
-		}
-	};
 
 	return (
 		<div className="container py-20">

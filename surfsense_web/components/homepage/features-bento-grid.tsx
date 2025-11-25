@@ -327,7 +327,7 @@ const AnnotationIllustration = () => (
 				{/* Comment card */}
 				<div className="flex flex-col items-start gap-4 rounded-xl bg-neutral-100 dark:bg-neutral-900/50 px-6 py-5 text-xl sm:text-2xl lg:text-3xl max-w-md">
 					<div className="truncate leading-normal text-neutral-600 dark:text-neutral-400">
-						<span>Let's discuss this tomorrow!</span>
+						<span>Let&apos;s discuss this tomorrow!</span>
 					</div>
 
 					{/* Reaction icons */}

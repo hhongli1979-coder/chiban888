@@ -38,8 +38,8 @@ export interface ToolInvocation {
 	state: "call" | "result";
 	toolCallId: string;
 	toolName: string;
-	args: any;
-	result?: any;
+	args: Record<string, unknown>;
+	result?: unknown;
 }
 
 export interface ToolInvocationUIPart {

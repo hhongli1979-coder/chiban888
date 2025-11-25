@@ -22,44 +22,56 @@ export function MarkdownViewer({ content, className }: MarkdownViewerProps) {
 	const components = useMemo(() => {
 		return {
 			// Define custom components for markdown elements
-			p: ({ node, children, ...props }: any) => (
+			// biome-ignore lint/suspicious/noExplicitAny: react-markdown component props
+			p: ({ children, ...props }: { children?: React.ReactNode } & Record<string, unknown>) => (
 				<p className="my-2" {...props}>
 					{children}
 				</p>
 			),
-			a: ({ node, children, ...props }: any) => (
+			// biome-ignore lint/suspicious/noExplicitAny: react-markdown component props
+			a: ({ children, ...props }: { children?: React.ReactNode } & Record<string, unknown>) => (
 				<a className="text-primary hover:underline" {...props}>
 					{children}
 				</a>
 			),
-			li: ({ node, children, ...props }: any) => <li {...props}>{children}</li>,
-			ul: ({ node, ...props }: any) => <ul className="list-disc pl-5 my-2" {...props} />,
-			ol: ({ node, ...props }: any) => <ol className="list-decimal pl-5 my-2" {...props} />,
-			h1: ({ node, children, ...props }: any) => (
+			// biome-ignore lint/suspicious/noExplicitAny: react-markdown component props
+			li: ({ children, ...props }: { children?: React.ReactNode } & Record<string, unknown>) => <li {...props}>{children}</li>,
+			// biome-ignore lint/suspicious/noExplicitAny: react-markdown component props
+			ul: (props: Record<string, unknown>) => <ul className="list-disc pl-5 my-2" {...props} />,
+			// biome-ignore lint/suspicious/noExplicitAny: react-markdown component props
+			ol: (props: Record<string, unknown>) => <ol className="list-decimal pl-5 my-2" {...props} />,
+			// biome-ignore lint/suspicious/noExplicitAny: react-markdown component props
+			h1: ({ children, ...props }: { children?: React.ReactNode } & Record<string, unknown>) => (
 				<h1 className="text-2xl font-bold mt-6 mb-2" {...props}>
 					{children}
 				</h1>
 			),
-			h2: ({ node, children, ...props }: any) => (
+			// biome-ignore lint/suspicious/noExplicitAny: react-markdown component props
+			h2: ({ children, ...props }: { children?: React.ReactNode } & Record<string, unknown>) => (
 				<h2 className="text-xl font-bold mt-5 mb-2" {...props}>
 					{children}
 				</h2>
 			),
-			h3: ({ node, children, ...props }: any) => (
+			// biome-ignore lint/suspicious/noExplicitAny: react-markdown component props
+			h3: ({ children, ...props }: { children?: React.ReactNode } & Record<string, unknown>) => (
 				<h3 className="text-lg font-bold mt-4 mb-2" {...props}>
 					{children}
 				</h3>
 			),
-			h4: ({ node, children, ...props }: any) => (
+			// biome-ignore lint/suspicious/noExplicitAny: react-markdown component props
+			h4: ({ children, ...props }: { children?: React.ReactNode } & Record<string, unknown>) => (
 				<h4 className="text-base font-bold mt-3 mb-1" {...props}>
 					{children}
 				</h4>
 			),
-			blockquote: ({ node, ...props }: any) => (
+			// biome-ignore lint/suspicious/noExplicitAny: react-markdown component props
+			blockquote: (props: Record<string, unknown>) => (
 				<blockquote className="border-l-4 border-muted pl-4 italic my-2" {...props} />
 			),
-			hr: ({ node, ...props }: any) => <hr className="my-4 border-muted" {...props} />,
-			img: ({ node, ...props }: any) => (
+			// biome-ignore lint/suspicious/noExplicitAny: react-markdown component props
+			hr: (props: Record<string, unknown>) => <hr className="my-4 border-muted" {...props} />,
+			// biome-ignore lint/suspicious/noExplicitAny: react-markdown component props
+			img: (props: Record<string, unknown>) => (
 				<Image
 					className="max-w-full h-auto my-4 rounded"
 					alt="markdown image"
@@ -68,18 +80,22 @@ export function MarkdownViewer({ content, className }: MarkdownViewerProps) {
 					{...props}
 				/>
 			),
-			table: ({ node, ...props }: any) => (
+			// biome-ignore lint/suspicious/noExplicitAny: react-markdown component props
+			table: (props: Record<string, unknown>) => (
 				<div className="overflow-x-auto my-4">
 					<table className="min-w-full divide-y divide-border" {...props} />
 				</div>
 			),
-			th: ({ node, ...props }: any) => (
+			// biome-ignore lint/suspicious/noExplicitAny: react-markdown component props
+			th: (props: Record<string, unknown>) => (
 				<th className="px-3 py-2 text-left font-medium bg-muted" {...props} />
 			),
-			td: ({ node, ...props }: any) => (
+			// biome-ignore lint/suspicious/noExplicitAny: react-markdown component props
+			td: (props: Record<string, unknown>) => (
 				<td className="px-3 py-2 border-t border-border" {...props} />
 			),
-			code: ({ node, className, children, ...props }: any) => {
+			// biome-ignore lint/suspicious/noExplicitAny: react-markdown component props
+			code: ({ className, children, ...props }: { className?: string; children?: React.ReactNode } & Record<string, unknown>) => {
 				const match = /language-(\w+)/.exec(className || "");
 				const language = match ? match[1] : "";
 				const isInline = !match;
@@ -94,7 +110,7 @@ export function MarkdownViewer({ content, className }: MarkdownViewerProps) {
 
 				// For code blocks, add syntax highlighting and copy functionality
 				return (
-					<CodeBlock language={language} {...props}>
+					<CodeBlock language={language}>
 						{String(children).replace(/\n$/, "")}
 					</CodeBlock>
 				);

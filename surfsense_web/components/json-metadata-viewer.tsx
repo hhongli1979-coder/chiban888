@@ -13,7 +13,7 @@ import "react-json-view-lite/dist/index.css";
 
 interface JsonMetadataViewerProps {
 	title: string;
-	metadata: any;
+	metadata: unknown;
 	trigger?: React.ReactNode;
 }
 

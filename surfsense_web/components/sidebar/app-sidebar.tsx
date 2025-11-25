@@ -22,7 +22,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { memo, useMemo } from "react";
 
-import { Logo } from "@/components/Logo";
 import { NavMain } from "@/components/sidebar/nav-main";
 import { NavProjects } from "@/components/sidebar/nav-projects";
 import { NavSecondary } from "@/components/sidebar/nav-secondary";
