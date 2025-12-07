@@ -24,10 +24,11 @@ SurfSense provides a complete REST API that can be integrated with BuildingAI:
 
 #### 主要 API 端点 | Main API Endpoints
 
-- **文档管理 | Document Management**: `/api/documents`
-- **搜索查询 | Search Query**: `/api/search`
-- **对话接口 | Chat Interface**: `/api/chat`
-- **空间管理 | Space Management**: `/api/spaces`
+- **文档管理 | Document Management**: `/api/v1/documents`
+- **文档搜索 | Document Search**: `/api/v1/documents/search`
+- **对话接口 | Chat Interface**: `/api/v1/chat`
+- **空间管理 | Space Management**: `/api/v1/searchspaces`
+- **聊天历史 | Chat History**: `/api/v1/chats`
 
 #### 示例代码 | Example Code
 
@@ -35,26 +36,36 @@ SurfSense provides a complete REST API that can be integrated with BuildingAI:
 import requests
 
 # SurfSense API 基础 URL
-SURFSENSE_API_URL = "http://localhost:8000/api"
+SURFSENSE_API_URL = "http://localhost:8000/api/v1"
 
-# 搜索示例
-def search_in_surfsense(query: str, space_id: str = None):
-    """在 SurfSense 中搜索内容"""
-    endpoint = f"{SURFSENSE_API_URL}/search"
+# 文档搜索示例
+def search_documents(title: str, search_space_id: int = None):
+    """在 SurfSense 中搜索文档"""
+    endpoint = f"{SURFSENSE_API_URL}/documents/search"
     params = {
-        "query": query,
-        "space_id": space_id
+        "title": title,  # 按标题搜索
+        "search_space_id": search_space_id,
+        "page_size": 20
     }
     response = requests.get(endpoint, params=params)
     return response.json()
 
-# 对话示例
-def chat_with_surfsense(message: str, space_id: str = None):
+# 对话示例 (需要更多参数)
+def chat_with_surfsense(
+    message: str, 
+    search_space_id: int,
+    research_mode: bool = False,
+    selected_connectors: list = None
+):
     """与 SurfSense 进行对话"""
     endpoint = f"{SURFSENSE_API_URL}/chat"
     data = {
-        "message": message,
-        "space_id": space_id
+        "messages": [{"role": "user", "content": message}],
+        "data": {
+            "search_space_id": search_space_id,
+            "research_mode": research_mode,
+            "selected_connectors": selected_connectors or []
+        }
     }
     response = requests.post(endpoint, json=data)
     return response.json()
@@ -153,19 +164,31 @@ Embed SurfSense as an iframe in BuildingAI's frontend, or call it directly via A
 // BuildingAI 中集成 SurfSense API
 import axios from 'axios';
 
-const SURFSENSE_API = 'http://localhost:8000/api';
+const SURFSENSE_API = 'http://localhost:8000/api/v1';
 
-async function searchSurfSense(query: string) {
-  const response = await axios.get(`${SURFSENSE_API}/search`, {
-    params: { query }
+async function searchDocuments(title: string, searchSpaceId?: number) {
+  const response = await axios.get(`${SURFSENSE_API}/documents/search`, {
+    params: { 
+      title,
+      search_space_id: searchSpaceId,
+      page_size: 20
+    }
   });
   return response.data;
 }
 
-async function chatWithSurfSense(message: string, spaceId?: string) {
+async function chatWithSurfSense(
+  message: string, 
+  searchSpaceId: number,
+  researchMode: boolean = false
+) {
   const response = await axios.post(`${SURFSENSE_API}/chat`, {
-    message,
-    space_id: spaceId
+    messages: [{ role: 'user', content: message }],
+    data: {
+      search_space_id: searchSpaceId,
+      research_mode: researchMode,
+      selected_connectors: []
+    }
   });
   return response.data;
 }
@@ -173,12 +196,12 @@ async function chatWithSurfSense(message: string, spaceId?: string) {
 // 在 BuildingAI 应用中使用
 function BuildingAIApp() {
   const handleSearch = async (query: string) => {
-    const results = await searchSurfSense(query);
+    const results = await searchDocuments(query, 1);
     console.log('Search results:', results);
   };
   
   const handleChat = async (message: string) => {
-    const response = await chatWithSurfSense(message);
+    const response = await chatWithSurfSense(message, 1);
     console.log('Chat response:', response);
   };
   
@@ -256,13 +279,17 @@ Add SurfSense connection information to BuildingAI's configuration file:
 ### 步骤 3：验证集成 | Step 3: Verify Integration
 
 ```bash
-# 测试 API 连接
-curl http://localhost:8000/api/health
+# 测试 API 连接 - 验证 Token
+curl http://localhost:8000/verify-token \
+  -H "Authorization: Bearer your_token_here"
 
-# 测试搜索功能
-curl -X POST http://localhost:8000/api/search \
-  -H "Content-Type: application/json" \
-  -d '{"query": "test query"}'
+# 测试文档搜索功能
+curl -X GET "http://localhost:8000/api/v1/documents/search?title=test&page_size=10" \
+  -H "Authorization: Bearer your_token_here"
+
+# 获取搜索空间列表
+curl http://localhost:8000/api/v1/searchspaces \
+  -H "Authorization: Bearer your_token_here"
 ```
 
 ---
@@ -324,20 +351,31 @@ class SurfSenseClient:
             **(custom_headers or {})
         }
     
-    def search(self, query: str, space_id: str = None):
-        """在 SurfSense 中搜索"""
+    def search_documents(self, title: str, search_space_id: int = None):
+        """在 SurfSense 中搜索文档"""
         response = requests.get(
-            f"{self.api_url}/api/search",
-            params={"query": query, "space_id": space_id},
+            f"{self.api_url}/api/v1/documents/search",
+            params={
+                "title": title, 
+                "search_space_id": search_space_id,
+                "page_size": 20
+            },
             headers=self.headers
         )
         return response.json()
     
-    def chat(self, message: str, space_id: str = None):
+    def chat(self, message: str, search_space_id: int, research_mode: bool = False):
         """与 SurfSense 对话"""
         response = requests.post(
-            f"{self.api_url}/api/chat",
-            json={"message": message, "space_id": space_id},
+            f"{self.api_url}/api/v1/chat",
+            json={
+                "messages": [{"role": "user", "content": message}],
+                "data": {
+                    "search_space_id": search_space_id,
+                    "research_mode": research_mode,
+                    "selected_connectors": []
+                }
+            },
             headers=self.headers
         )
         return response.json()
@@ -353,7 +391,7 @@ client = SurfSenseClient(
 )
 
 # 执行搜索
-results = client.search("machine learning")
+results = client.search_documents("machine learning", search_space_id=1)
 ```
 
 ### 性能优化 | Performance Optimization
@@ -394,7 +432,7 @@ services:
 **A:** SurfSense 支持 100+ 种 LLM，包括 OpenAI、Azure、本地 Ollama、DeepSeek、通义千问等。
 
 ### Q: 如何在 BuildingAI 中使用 SurfSense 的搜索功能？
-**A:** 通过 REST API 调用 `/api/search` 端点，传入查询参数即可获取搜索结果。
+**A:** 通过 REST API 调用 `/api/v1/documents/search` 端点，传入 `title` 参数进行文档搜索，或使用 `/api/v1/chat` 端点进行智能对话搜索。
 
 ### Q: SurfSense 是否支持私有部署？
 **A:** 是的，SurfSense 完全支持自托管部署，可以部署在您的私有环境中。
