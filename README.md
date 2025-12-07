@@ -141,6 +141,9 @@ Check out our public roadmap and contribute your ideas or feedback:
 
 **View the Roadmap:** [SurfSense Roadmap on GitHub Projects](https://github.com/users/MODSetter/projects/2)
 
+## 🔗 Integration with BuildingAI
+
+SurfSense can be integrated with the [BuildingAI](https://gitee.com/BidingCC/BuildingAI.git) platform as a knowledge base and research component. For detailed integration instructions, see our [BuildingAI Integration Guide](docs/buildingai-integration.md).
 
 ## How to get started?
 

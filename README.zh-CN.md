@@ -148,6 +148,9 @@ https://github.com/user-attachments/assets/a0a16566-6967-4374-ac51-9b3e07fbecd7
 
 **查看路线图：** [SurfSense 路线图 (GitHub Projects)](https://github.com/users/MODSetter/projects/2)
 
+## 🔗 与 BuildingAI 集成
+
+SurfSense 可以作为知识库和研究组件与 [BuildingAI](https://gitee.com/BidingCC/BuildingAI.git) 平台进行集成。详细的集成说明请参见我们的 [BuildingAI 集成指南](docs/buildingai-integration.md)。
 
 ## 如何开始？
 
