@@ -153,20 +153,27 @@ https://github.com/user-attachments/assets/a0a16566-6967-4374-ac51-9b3e07fbecd7
 
 ### 安装选项
 
-SurfSense 提供三种入门方式：
+SurfSense 提供四种入门方式：
 
 1. **[SurfSense Cloud](https://www.surfsense.com/login)** - 无需任何设置即可试用 SurfSense 的最简单方法。
    - 无需安装
    - 即时访问所有功能
    - 非常适合快速上手
 
-2. **[Docker 安装（推荐用于自托管）](https://www.surfsense.net/docs/docker-installation)** - 通过容器化所有依赖项，轻松启动和运行 SurfSense。
+2. **[Windows 桌面应用程序](surfsense_desktop/README.md)** ⭐ **新增** - 原生 Windows 桌面应用。
+   - 原生 Windows 体验，支持系统托盘集成
+   - 离线功能
+   - 桌面通知
+   - 易于使用的安装程序或便携版本
+   - 非常适合希望获得桌面应用体验的 Windows 用户
+
+3. **[Docker 安装（推荐用于自托管）](https://www.surfsense.net/docs/docker-installation)** - 通过容器化所有依赖项，轻松启动和运行 SurfSense。
    - 包含 pgAdmin，通过 Web UI 进行数据库管理
    - 支持通过 `.env` 文件自定义环境变量
    - 灵活的部署选项（完整堆栈或仅核心服务）
    - 无需在环境之间手动编辑配置文件
 
-3. **[手动安装](https://www.surfsense.net/docs/manual-installation)** - 适合希望对设置有更多控制或需要自定义部署的用户。
+4. **[手动安装](https://www.surfsense.net/docs/manual-installation)** - 适合希望对设置有更多控制或需要自定义部署的用户。
 
 Docker 和手动安装指南都包含适用于 Windows、macOS 和 Linux 的详细操作系统特定说明。
 

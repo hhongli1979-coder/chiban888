@@ -146,20 +146,27 @@ Check out our public roadmap and contribute your ideas or feedback:
 
 ### Installation Options
 
-SurfSense provides three options to get started:
+SurfSense provides four options to get started:
 
 1. **[SurfSense Cloud](https://www.surfsense.com/login)** - The easiest way to try SurfSense without any setup.
    - No installation required
    - Instant access to all features
    - Perfect for getting started quickly
 
-2. **[Docker Installation (Recommended for Self-Hosting)](https://www.surfsense.net/docs/docker-installation)** - Easy way to get SurfSense up and running with all dependencies containerized.
+2. **[Windows Desktop Application](surfsense_desktop/README.md)** ⭐ **NEW** - Native Windows desktop application.
+   - Native Windows experience with system tray integration
+   - Offline capabilities
+   - Desktop notifications
+   - Easy-to-use installer or portable version
+   - Perfect for Windows users who want a desktop app experience
+
+3. **[Docker Installation (Recommended for Self-Hosting)](https://www.surfsense.net/docs/docker-installation)** - Easy way to get SurfSense up and running with all dependencies containerized.
    - Includes pgAdmin for database management through a web UI
    - Supports environment variable customization via `.env` file
    - Flexible deployment options (full stack or core services only)
    - No need to manually edit configuration files between environments
 
-3. **[Manual Installation](https://www.surfsense.net/docs/manual-installation)** - For users who prefer more control over their setup or need to customize their deployment.
+4. **[Manual Installation](https://www.surfsense.net/docs/manual-installation)** - For users who prefer more control over their setup or need to customize their deployment.
 
 Docker and manual installation guides include detailed OS-specific instructions for Windows, macOS, and Linux.
 

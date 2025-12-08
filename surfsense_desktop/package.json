@@ -1,0 +1,80 @@
+{
+  "name": "surfsense-desktop",
+  "productName": "SurfSense",
+  "version": "1.0.0",
+  "description": "SurfSense - AI-powered research assistant for Windows",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "cross-env NODE_ENV=development electron .",
+    "build": "electron-builder --win --x64",
+    "build:dir": "electron-builder --win --x64 --dir",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "validate": "node validate.js",
+    "icons": "node generate-icons.js",
+    "test": "node test-build-config.js"
+  },
+  "keywords": [
+    "surfsense",
+    "electron",
+    "research",
+    "ai",
+    "desktop"
+  ],
+  "author": "SurfSense Team",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^39.2.3",
+    "electron-builder": "^26.0.12",
+    "sharp": "^0.34.5"
+  },
+  "dependencies": {
+    "cross-env": "^7.0.3"
+  },
+  "build": {
+    "appId": "com.surfsense.desktop",
+    "productName": "SurfSense",
+    "copyright": "Copyright © 2024 SurfSense Team",
+    "directories": {
+      "output": "dist",
+      "buildResources": "assets"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "assets/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/icon.ico",
+      "artifactName": "${productName}-${version}-${arch}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "assets/icon.ico",
+      "uninstallerIcon": "assets/icon.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "SurfSense"
+    },
+    "portable": {
+      "artifactName": "${productName}-${version}-portable.${ext}"
+    }
+  }
+}
