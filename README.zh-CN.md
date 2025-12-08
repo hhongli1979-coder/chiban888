@@ -291,6 +291,11 @@ Docker 和手动安装指南都包含适用于 Windows、macOS 和 Linux 的详�
 基于 Plasmo 的 Manifest v3
 
 
+## 相关项目
+
+### BuildingAI.g
+[BuildingAI.g](https://gitee.com/BidingCC/BuildingAI.g) 是托管在 Gitee 上的相关 AI 项目，提供互补的 AI 构建工具和资源。
+
 ## 贡献
 
 非常欢迎贡献！贡献可以小到一个 ⭐，甚至是发现和创建问题。

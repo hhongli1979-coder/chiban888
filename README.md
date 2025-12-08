@@ -284,6 +284,11 @@ Before self-hosting installation, make sure to complete the [prerequisite setup 
  Manifest v3 on Plasmo
 
 
+## Related Projects
+
+### BuildingAI.g
+[BuildingAI.g](https://gitee.com/BidingCC/BuildingAI.g) is a related AI project hosted on Gitee that provides complementary AI building tools and resources.
+
 ## Contribute 
 
 Contributions are very welcome! A contribution can be as small as a ⭐ or even finding and creating issues.
