@@ -49,7 +49,16 @@ const INTEGRATIONS: Integration[] = [
 	{ name: "YouTube", icon: "https://cdn.simpleicons.org/youtube/FF0000" },
 ];
 
-function SemiCircleOrbit({ radius, centerX, centerY, count, iconSize, startIndex }: any) {
+interface SemiCircleOrbitProps {
+	radius: number;
+	centerX: number;
+	centerY: number;
+	count: number;
+	iconSize: number;
+	startIndex: number;
+}
+
+function SemiCircleOrbit({ radius, centerX, centerY, count, iconSize, startIndex }: SemiCircleOrbitProps) {
 	return (
 		<>
 			{/* Semi-circle glow background */}
@@ -148,7 +157,7 @@ export default function ExternalIntegrations() {
 			<div className="relative flex flex-col items-center text-center z-10">
 				<h1 className="my-6 text-4xl font-bold lg:text-7xl">Integrations</h1>
 				<p className="mb-12 max-w-2xl text-gray-600 dark:text-gray-400 lg:text-xl">
-					Integrate with your team's most important tools
+					Integrate with your team&apos;s most important tools
 				</p>
 
 				<div

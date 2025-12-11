@@ -21,9 +21,9 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Switch } from "@/components/ui/switch";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
-import { type CommunityPrompt, useCommunityPrompts } from "@/hooks/use-community-prompts";
+import { useCommunityPrompts } from "@/hooks/use-community-prompts";
 import { useSearchSpace } from "@/hooks/use-search-space";
 
 interface PromptConfigManagerProps {
@@ -71,7 +71,7 @@ export function PromptConfigManager({ searchSpaceId }: PromptConfigManagerProps)
 			setSaving(true);
 
 			// Prepare payload with simplified schema
-			const payload: any = {
+			const payload: { citations_enabled: boolean; qna_custom_instructions: string } = {
 				citations_enabled: enableCitations,
 				qna_custom_instructions: customInstructions.trim() || "",
 			};
@@ -102,9 +102,10 @@ export function PromptConfigManager({ searchSpaceId }: PromptConfigManagerProps)
 
 			// Refresh to get updated data
 			await fetchSearchSpace();
-		} catch (error: any) {
+		} catch (error: unknown) {
 			console.error("Error saving prompt configuration:", error);
-			toast.error(error.message || "Failed to save prompt configuration");
+			const errorMessage = error instanceof Error ? error.message : "Failed to save prompt configuration";
+			toast.error(errorMessage);
 		} finally {
 			setSaving(false);
 		}
@@ -230,7 +231,7 @@ export function PromptConfigManager({ searchSpaceId }: PromptConfigManagerProps)
 				<CardHeader>
 					<CardTitle>SearchSpace System Instructions</CardTitle>
 					<CardDescription>
-						Add system instructions to guide the AI's response style and behavior
+						Add system instructions to guide the AI&apos;s response style and behavior
 					</CardDescription>
 				</CardHeader>
 				<CardContent className="space-y-4">
@@ -446,7 +447,7 @@ export function PromptConfigManager({ searchSpaceId }: PromptConfigManagerProps)
 				>
 					<Info className="h-4 w-4 text-blue-600 dark:text-blue-500" />
 					<AlertDescription className="text-blue-800 dark:text-blue-300">
-						You have unsaved changes. Click "Save Configuration" to apply them.
+						You have unsaved changes. Click &quot;Save Configuration&quot; to apply them.
 					</AlertDescription>
 				</Alert>
 			)}

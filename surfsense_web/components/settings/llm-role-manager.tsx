@@ -71,7 +71,6 @@ export function LLMRoleManager({ searchSpaceId }: LLMRoleManagerProps) {
 		globalConfigs,
 		loading: globalConfigsLoading,
 		error: globalConfigsError,
-		refreshGlobalConfigs,
 	} = useGlobalLLMConfigs();
 	const {
 		preferences,

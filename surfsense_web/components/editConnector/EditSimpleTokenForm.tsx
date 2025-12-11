@@ -1,7 +1,7 @@
 "use client";
 
 import { KeyRound } from "lucide-react";
-import type { Control } from "react-hook-form";
+import type { Control, FieldValues } from "react-hook-form";
 import {
 	FormControl,
 	FormDescription,
@@ -13,21 +13,21 @@ import {
 import { Input } from "@/components/ui/input";
 
 // Assuming EditConnectorFormValues is defined elsewhere or passed as generic
-interface EditSimpleTokenFormProps {
-	control: Control<any>;
+interface EditSimpleTokenFormProps<T extends FieldValues = FieldValues> {
+	control: Control<T>;
 	fieldName: string; // e.g., "SLACK_BOT_TOKEN"
 	fieldLabel: string; // e.g., "Slack Bot Token"
 	fieldDescription: string;
 	placeholder?: string;
 }
 
-export function EditSimpleTokenForm({
+export function EditSimpleTokenForm<T extends FieldValues = FieldValues>({
 	control,
 	fieldName,
 	fieldLabel,
 	fieldDescription,
 	placeholder,
-}: EditSimpleTokenFormProps) {
+}: EditSimpleTokenFormProps<T>) {
 	return (
 		<FormField
 			control={control}

@@ -79,7 +79,7 @@ export function ContactFormGridWithDetails() {
 					Contact
 				</h2>
 				<p className="mt-8 max-w-lg text-center text-base text-neutral-600 md:text-left dark:text-neutral-400">
-					We'd love to Hear From You.
+					We&apos;d love to Hear From You.
 				</p>
 
 				<div className="mt-10 hidden flex-col items-center gap-4 md:flex-row lg:flex">
@@ -320,7 +320,15 @@ export const Grid = ({ pattern, size }: { pattern?: number[][]; size?: number })
 	);
 };
 
-export function GridPattern({ width, height, x, y, squares, ...props }: any) {
+interface GridPatternProps extends React.SVGProps<SVGSVGElement> {
+	width: number;
+	height: number;
+	x: string;
+	y: string;
+	squares?: number[][];
+}
+
+export function GridPattern({ width, height, x, y, squares, ...props }: GridPatternProps) {
 	const patternId = useId();
 
 	return (
@@ -340,14 +348,14 @@ export function GridPattern({ width, height, x, y, squares, ...props }: any) {
 			<rect width="100%" height="100%" strokeWidth={0} fill={`url(#${patternId})`} />
 			{squares && (
 				<svg aria-hidden="true" x={x} y={y} className="overflow-visible">
-					{squares.map(([x, y]: any, idx: number) => (
+					{squares.map(([squareX, squareY]: number[], idx: number) => (
 						<rect
 							strokeWidth="0"
-							key={`${x}-${y}-${idx}`}
+							key={`${squareX}-${squareY}-${idx}`}
 							width={width + 1}
 							height={height + 1}
-							x={x * width}
-							y={y * height}
+							x={squareX * width}
+							y={squareY * height}
 						/>
 					))}
 				</svg>

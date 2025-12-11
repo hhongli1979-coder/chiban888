@@ -5,12 +5,13 @@ export type ListResponse<T> = {
 	total: number;
 };
 
-export function normalizeListResponse<T>(payload: any): ListResponse<T> {
+export function normalizeListResponse<T>(payload: unknown): ListResponse<T> {
 	try {
 		// Case 1: already in desired shape
-		if (payload && Array.isArray(payload.items)) {
-			const total = typeof payload.total === "number" ? payload.total : payload.items.length;
-			return { items: payload.items as T[], total };
+		if (payload && typeof payload === "object" && "items" in payload && Array.isArray((payload as { items: unknown }).items)) {
+			const obj = payload as { items: T[]; total?: number };
+			const total = typeof obj.total === "number" ? obj.total : obj.items.length;
+			return { items: obj.items, total };
 		}
 
 		// Case 2: tuple [items, total]
@@ -25,7 +26,7 @@ export function normalizeListResponse<T>(payload: any): ListResponse<T> {
 		if (Array.isArray(payload)) {
 			return { items: payload as T[], total: (payload as T[]).length };
 		}
-	} catch (e) {
+	} catch {
 		// fallthrough to default
 	}
 

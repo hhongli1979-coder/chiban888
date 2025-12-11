@@ -12,7 +12,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
-import { type CommunityPrompt, useCommunityPrompts } from "@/hooks/use-community-prompts";
+import { useCommunityPrompts } from "@/hooks/use-community-prompts";
 
 interface SetupPromptStepProps {
 	searchSpaceId: number;
@@ -67,7 +67,7 @@ export function SetupPromptStep({ searchSpaceId, onComplete }: SetupPromptStepPr
 			setSaving(true);
 
 			// Prepare the update payload with simplified schema
-			const payload: any = {
+			const payload: { citations_enabled: boolean; qna_custom_instructions: string } = {
 				citations_enabled: enableCitations,
 				qna_custom_instructions: customInstructions.trim() || "",
 			};
@@ -98,9 +98,10 @@ export function SetupPromptStep({ searchSpaceId, onComplete }: SetupPromptStepPr
 
 			setHasChanges(false);
 			onComplete?.();
-		} catch (error: any) {
+		} catch (error: unknown) {
 			console.error("Error saving prompt configuration:", error);
-			toast.error(error.message || "Failed to save prompt configuration");
+			const errorMessage = error instanceof Error ? error.message : "Failed to save prompt configuration";
+			toast.error(errorMessage);
 		} finally {
 			setSaving(false);
 		}
@@ -146,7 +147,7 @@ export function SetupPromptStep({ searchSpaceId, onComplete }: SetupPromptStepPr
 					>
 						<Info className="h-4 w-4 text-yellow-600 dark:text-yellow-500" />
 						<AlertDescription className="text-yellow-800 dark:text-yellow-300">
-							Disabling citations means AI responses won't include source references. You can
+							Disabling citations means AI responses won&apos;t include source references. You can
 							re-enable this anytime in settings.
 						</AlertDescription>
 					</Alert>

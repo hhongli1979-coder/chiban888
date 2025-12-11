@@ -93,10 +93,11 @@ export function YouTubeTab({ searchSpaceId }: YouTubeTabProps) {
 			});
 
 			router.push(`/dashboard/${searchSpaceId}/documents`);
-		} catch (error: any) {
-			setError(error.message || t("error_generic"));
+		} catch (error: unknown) {
+			const errorMessage = error instanceof Error ? error.message : t("error_generic");
+			setError(errorMessage);
 			toast(t("error_toast"), {
-				description: `${t("error_toast_desc")}: ${error.message}`,
+				description: `${t("error_toast_desc")}: ${errorMessage}`,
 			});
 		} finally {
 			setIsSubmitting(false);

@@ -1,4 +1,4 @@
-import { type RefObject, useEffect } from "react";
+import { type RefObject, useCallback, useEffect } from "react";
 
 /**
  * Function to scroll to the bottom of a container
@@ -10,10 +10,12 @@ export const scrollToBottom = (ref: RefObject<HTMLDivElement>) => {
 /**
  * Hook to scroll to bottom when messages change
  */
-export const useScrollToBottom = (ref: RefObject<HTMLDivElement>, dependencies: any[]) => {
+export const useScrollToBottom = (ref: RefObject<HTMLDivElement>, dependencies: unknown[]) => {
 	useEffect(() => {
 		scrollToBottom(ref);
-	}, dependencies);
+	// Dependencies array is intentionally passed dynamically
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [...dependencies, ref]);
 };
 
 /**
@@ -39,8 +41,10 @@ export const useScrollIndicators = (
 	setCanScrollLeft: (value: boolean) => void,
 	setCanScrollRight: (value: boolean) => void
 ) => {
-	const updateIndicators = () =>
-		updateScrollIndicators(tabsListRef, setCanScrollLeft, setCanScrollRight);
+	const updateIndicators = useCallback(() =>
+		updateScrollIndicators(tabsListRef, setCanScrollLeft, setCanScrollRight),
+		[tabsListRef, setCanScrollLeft, setCanScrollRight]
+	);
 
 	useEffect(() => {
 		updateIndicators();
