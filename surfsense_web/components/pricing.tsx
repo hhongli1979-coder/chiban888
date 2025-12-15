@@ -7,8 +7,6 @@ import { motion } from "motion/react";
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { buttonVariants } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { cn } from "@/lib/utils";
 

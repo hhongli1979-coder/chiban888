@@ -21,9 +21,9 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Switch } from "@/components/ui/switch";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
-import { type CommunityPrompt, useCommunityPrompts } from "@/hooks/use-community-prompts";
+import { useCommunityPrompts } from "@/hooks/use-community-prompts";
 import { useSearchSpace } from "@/hooks/use-search-space";
 
 interface PromptConfigManagerProps {
