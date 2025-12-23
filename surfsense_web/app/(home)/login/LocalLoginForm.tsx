@@ -111,7 +111,7 @@ export function LocalLoginForm() {
 			<form onSubmit={handleSubmit} className="space-y-4">
 				{/* Error Display */}
 				<AnimatePresence>
-					{error && error.title && (
+					{error?.title && (
 						<motion.div
 							initial={{ opacity: 0, y: -10, scale: 0.95 }}
 							animate={{ opacity: 1, y: 0, scale: 1 }}

@@ -1,14 +1,11 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeft, Check, ExternalLink, Loader2 } from "lucide-react";
 import { motion } from "motion/react";
 import Link from "next/link";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -32,10 +29,10 @@ export default function GoogleGmailConnectorPage() {
 	const [isConnecting, setIsConnecting] = useState(false);
 	const [doesConnectorExist, setDoesConnectorExist] = useState(false);
 
-	const { fetchConnectors } = useSearchSourceConnectors(true, parseInt(searchSpaceId));
+	const { fetchConnectors } = useSearchSourceConnectors(true, parseInt(searchSpaceId, 10));
 
 	useEffect(() => {
-		fetchConnectors(parseInt(searchSpaceId)).then((data) => {
+		fetchConnectors(parseInt(searchSpaceId, 10)).then((data) => {
 			const connector = data.find(
 				(c: SearchSourceConnector) => c.connector_type === EnumConnectorName.GOOGLE_GMAIL_CONNECTOR
 			);
@@ -43,7 +40,7 @@ export default function GoogleGmailConnectorPage() {
 				setDoesConnectorExist(true);
 			}
 		});
-	}, []);
+	}, [fetchConnectors, searchSpaceId]);
 
 	// Handle Google OAuth connection
 	const handleConnectGoogle = async () => {

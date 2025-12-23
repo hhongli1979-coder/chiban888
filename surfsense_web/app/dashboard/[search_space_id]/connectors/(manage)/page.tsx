@@ -57,7 +57,6 @@ import {
 	TableRow,
 } from "@/components/ui/table";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { EnumConnectorName } from "@/contracts/enums/connector";
 import { getConnectorIcon } from "@/contracts/enums/connectorIcons";
 import { useSearchSourceConnectors } from "@/hooks/use-search-source-connectors";
 import { cn } from "@/lib/utils";
@@ -85,7 +84,7 @@ export default function ConnectorsPage() {
 	const today = new Date();
 
 	const { connectors, isLoading, error, deleteConnector, indexConnector, updateConnector } =
-		useSearchSourceConnectors(false, parseInt(searchSpaceId));
+		useSearchSourceConnectors(false, parseInt(searchSpaceId, 10));
 	const [connectorToDelete, setConnectorToDelete] = useState<number | null>(null);
 	const [indexingConnectorId, setIndexingConnectorId] = useState<number | null>(null);
 	const [datePickerOpen, setDatePickerOpen] = useState(false);
@@ -211,7 +210,7 @@ export default function ConnectorsPage() {
 			if (periodicEnabled) {
 				if (frequencyMinutes === "custom") {
 					frequency = parseInt(customFrequency, 10);
-					if (isNaN(frequency) || frequency <= 0) {
+					if (Number.isNaN(frequency) || frequency <= 0) {
 						toast.error("Please enter a valid frequency in minutes");
 						setIsSavingPeriodic(false);
 						return;

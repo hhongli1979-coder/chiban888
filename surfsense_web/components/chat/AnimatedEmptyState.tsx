@@ -4,7 +4,6 @@ import { useInView } from "motion/react";
 import { Manrope } from "next/font/google";
 import { useEffect, useMemo, useReducer, useRef } from "react";
 import { RoughNotation, RoughNotationGroup } from "react-rough-notation";
-import { useSidebar } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 
 // Font configuration - could be moved to a global font config file

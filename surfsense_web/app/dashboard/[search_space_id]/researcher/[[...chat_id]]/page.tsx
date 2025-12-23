@@ -26,7 +26,7 @@ export default function ResearcherPage() {
 	// Reset the flag when chat ID changes
 	useEffect(() => {
 		hasSetInitialConnectors.current = false;
-	}, [activeChatId]);
+	}, []);
 
 	const {
 		token,
@@ -123,7 +123,7 @@ export default function ResearcherPage() {
 
 	const customHandlerAppend = async (
 		message: Message | CreateMessage,
-		chatRequestOptions?: { data?: any }
+		_chatRequestOptions?: { data?: any }
 	) => {
 		const newChat = await createChat({
 			type: researchMode,
@@ -177,7 +177,15 @@ export default function ResearcherPage() {
 				}
 			}
 		}
-	}, [token, isNewChat, activeChatId, isChatLoading]);
+	}, [
+		token,
+		isNewChat,
+		activeChatId,
+		activeChatState?.chatDetails, // Single user message - append to trigger LLM response
+		handler.append, // Multiple messages - set them all
+		handler.setMessages,
+		setSelectedConnectors,
+	]);
 
 	// Restore chat state from localStorage on page load
 	useEffect(() => {
@@ -193,12 +201,12 @@ export default function ResearcherPage() {
 		}
 	}, [
 		activeChatId,
-		isChatLoading,
 		search_space_id,
 		setSelectedDocuments,
 		setSelectedConnectors,
 		setSearchMode,
 		setTopK,
+		restoreChatState,
 	]);
 
 	// Set all sources as default for new chats (only once on initial mount)
@@ -250,7 +258,16 @@ export default function ResearcherPage() {
 				id: Number(activeChatId),
 			});
 		}
-	}, [handler.messages, handler.status, activeChatId, isNewChat, isChatLoading]);
+	}, [
+		handler.messages,
+		handler.status,
+		activeChatId,
+		isNewChat,
+		researchMode,
+		search_space_id,
+		selectedConnectors,
+		updateChat,
+	]);
 
 	if (isChatLoading) {
 		return (

@@ -2,7 +2,7 @@
 
 import { useAtomValue } from "jotai";
 import { Pencil } from "lucide-react";
-import { useCallback, useContext, useState } from "react";
+import { useCallback, useState } from "react";
 import { activeChatAtom } from "@/atoms/chats/chat-query.atoms";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import type { GeneratePodcastRequest } from "./ChatPanelContainer";
@@ -30,7 +30,7 @@ export function ConfigModal(props: ConfigModalProps) {
 			podcast_title: podcast?.title || chatDetails.title,
 			user_prompt: userPromt,
 		});
-	}, [chatDetails, userPromt]);
+	}, [chatDetails, userPromt, generatePodcast, podcast?.title]);
 
 	return (
 		<Popover>

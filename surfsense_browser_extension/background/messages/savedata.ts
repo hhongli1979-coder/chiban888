@@ -19,44 +19,29 @@ const clearMemory = async () => {
 		chrome.tabs.query({}, async (tabs) => {
 			//Get Active Tabs Ids
 			// console.log("Event Tabs",tabs)
-			let actives = tabs.map((tab) => {
-				if (tab.id) {
-					return tab.id;
-				}
-			});
-
-			actives = actives.filter((item: any) => item);
+			const actives = tabs.map((tab) => tab.id).filter((item) => item !== undefined);
 
 			//Only retain which is still active
-			const newHistory = webHistory.webhistory.map((element: any) => {
-				//@ts-ignore
-				if (actives.includes(element.tabsessionId)) {
-					return element;
-				}
-			});
+			const newHistory = webHistory.webhistory.filter((element: any) =>
+				actives.includes(element.tabsessionId)
+			);
 
-			const newUrlQueue = urlQueue.urlQueueList.map((element: any) => {
-				//@ts-ignore
-				if (actives.includes(element.tabsessionId)) {
-					return element;
-				}
-			});
+			const newUrlQueue = urlQueue.urlQueueList.filter((element: any) =>
+				actives.includes(element.tabsessionId)
+			);
 
-			const newTimeQueue = timeQueue.timeQueueList.map((element: any) => {
-				//@ts-ignore
-				if (actives.includes(element.tabsessionId)) {
-					return element;
-				}
-			});
+			const newTimeQueue = timeQueue.timeQueueList.filter((element: any) =>
+				actives.includes(element.tabsessionId)
+			);
 
 			await storage.set("webhistory", {
-				webhistory: newHistory.filter((item: any) => item),
+				webhistory: newHistory,
 			});
 			await storage.set("urlQueueList", {
-				urlQueueList: newUrlQueue.filter((item: any) => item),
+				urlQueueList: newUrlQueue,
 			});
 			await storage.set("timeQueueList", {
-				timeQueueList: newTimeQueue.filter((item: any) => item),
+				timeQueueList: newTimeQueue,
 			});
 		});
 	} catch (error) {
@@ -64,7 +49,7 @@ const clearMemory = async () => {
 	}
 };
 
-const handler: PlasmoMessaging.MessageHandler = async (req, res) => {
+const handler: PlasmoMessaging.MessageHandler = async (_req, res) => {
 	try {
 		const storage = new Storage({ area: "local" });
 

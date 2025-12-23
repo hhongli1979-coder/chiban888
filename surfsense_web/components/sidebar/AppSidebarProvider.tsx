@@ -52,7 +52,7 @@ export function AppSidebarProvider({
 
 	useEffect(() => {
 		setChatsQueryParams((prev) => ({ ...prev, search_space_id: searchSpaceId, skip: 0, limit: 5 }));
-	}, [searchSpaceId]);
+	}, [searchSpaceId, setChatsQueryParams]);
 
 	const {
 		searchSpace,

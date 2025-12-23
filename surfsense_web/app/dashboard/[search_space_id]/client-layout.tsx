@@ -131,7 +131,7 @@ export function DashboardClientLayout({
 					: "";
 		if (!activeSeacrhSpaceId) return;
 		setActiveSearchSpaceIdState(activeSeacrhSpaceId);
-	}, [search_space_id]);
+	}, [search_space_id, setActiveSearchSpaceIdState]);
 
 	useEffect(() => {
 		const activeChatId =
@@ -142,7 +142,7 @@ export function DashboardClientLayout({
 					: "";
 		if (!activeChatId) return;
 		setActiveChatIdState(activeChatId);
-	}, [chat_id, search_space_id]);
+	}, [chat_id, setActiveChatIdState]);
 
 	// Show loading screen while checking onboarding status (only on first load)
 	if (!hasCheckedOnboarding && loading && !isOnboardingPage) {

@@ -126,7 +126,7 @@ export default function SearxngConnectorPage() {
 					indexing_frequency_minutes: null,
 					next_scheduled_at: null,
 				},
-				parseInt(searchSpaceId)
+				parseInt(searchSpaceId, 10)
 			);
 
 			toast.success("SearxNG connector created successfully!");

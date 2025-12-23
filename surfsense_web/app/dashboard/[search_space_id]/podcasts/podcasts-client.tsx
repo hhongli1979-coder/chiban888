@@ -127,7 +127,7 @@ export default function PodcastsPageClient({ searchSpaceId }: PodcastsPageClient
 		}
 
 		setFilteredPodcasts(podcasts);
-	}, []);
+	}, [fetchError, isFetchingPodcasts, podcasts]);
 
 	// Filter and sort podcasts based on search query and sort order
 	useEffect(() => {
@@ -142,7 +142,7 @@ export default function PodcastsPageClient({ searchSpaceId }: PodcastsPageClient
 		}
 
 		// Filter by search space
-		result = result.filter((podcast) => podcast.search_space_id === parseInt(searchSpaceId));
+		result = result.filter((podcast) => podcast.search_space_id === parseInt(searchSpaceId, 10));
 
 		// Sort podcasts
 		result.sort((a, b) => {

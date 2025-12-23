@@ -6,7 +6,7 @@ import { DOMParser } from "linkedom";
 import { getRenderedHtml, webhistoryToLangChainDocument } from "~utils/commons";
 import type { WebHistory } from "~utils/interfaces";
 
-// @ts-ignore
+// @ts-expect-error
 global.Node = {
 	ELEMENT_NODE: 1,
 	ATTRIBUTE_NODE: 2,
@@ -19,7 +19,7 @@ global.Node = {
 	DOCUMENT_FRAGMENT_NODE: 11,
 };
 
-const handler: PlasmoMessaging.MessageHandler = async (req, res) => {
+const handler: PlasmoMessaging.MessageHandler = async (_req, res) => {
 	try {
 		chrome.tabs.query({ active: true, currentWindow: true }, async (tabs) => {
 			const storage = new Storage({ area: "local" });
@@ -28,9 +28,9 @@ const handler: PlasmoMessaging.MessageHandler = async (req, res) => {
 				const tabId: number = tab.id;
 				console.log("tabs", tabs);
 				const result = await chrome.scripting.executeScript({
-					// @ts-ignore
+					// @ts-expect-error
 					target: { tabId: tab.id },
-					// @ts-ignore
+					// @ts-expect-error
 					func: getRenderedHtml,
 					// world: "MAIN"
 				});

@@ -44,7 +44,7 @@ const ApiKeyForm = () => {
 			} else {
 				setError("Invalid API key. Please check and try again.");
 			}
-		} catch (error) {
+		} catch (_error) {
 			setLoading(false);
 			setError("An error occurred. Please try again later.");
 		}

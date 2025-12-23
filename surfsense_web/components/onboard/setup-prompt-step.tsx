@@ -12,7 +12,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
-import { type CommunityPrompt, useCommunityPrompts } from "@/hooks/use-community-prompts";
+import { useCommunityPrompts } from "@/hooks/use-community-prompts";
 
 interface SetupPromptStepProps {
 	searchSpaceId: number;
@@ -32,7 +32,7 @@ export function SetupPromptStep({ searchSpaceId, onComplete }: SetupPromptStepPr
 	// Mark that we have changes when user modifies anything
 	useEffect(() => {
 		setHasChanges(true);
-	}, [enableCitations, customInstructions]);
+	}, []);
 
 	const handleSelectCommunityPrompt = (promptKey: string, promptValue: string) => {
 		setCustomInstructions(promptValue);
@@ -59,7 +59,7 @@ export function SetupPromptStep({ searchSpaceId, onComplete }: SetupPromptStepPr
 
 	const truncateText = (text: string, maxLength: number = 150) => {
 		if (text.length <= maxLength) return text;
-		return text.substring(0, maxLength) + "...";
+		return `${text.substring(0, maxLength)}...`;
 	};
 
 	const handleSave = async () => {

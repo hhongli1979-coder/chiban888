@@ -77,7 +77,7 @@ export function YouTubeTab({ searchSpaceId }: YouTubeTabProps) {
 					body: JSON.stringify({
 						document_type: "YOUTUBE_VIDEO",
 						content: videoUrls,
-						search_space_id: parseInt(searchSpaceId),
+						search_space_id: parseInt(searchSpaceId, 10),
 					}),
 				}
 			);

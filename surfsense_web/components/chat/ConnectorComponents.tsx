@@ -1,5 +1,4 @@
 import { ChevronDown, Plus } from "lucide-react";
-import type React from "react";
 import { Button } from "@/components/ui/button";
 import { getConnectorIcon } from "@/contracts/enums/connectorIcons";
 import type { Connector } from "./types";

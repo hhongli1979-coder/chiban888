@@ -85,7 +85,7 @@ function LoginContent() {
 		// Get the auth type from environment variables
 		setAuthType(process.env.NEXT_PUBLIC_FASTAPI_BACKEND_AUTH_TYPE || "GOOGLE");
 		setIsLoading(false);
-	}, [searchParams]);
+	}, [searchParams, t, tCommon]);
 
 	// Show loading state while determining auth type
 	if (isLoading) {

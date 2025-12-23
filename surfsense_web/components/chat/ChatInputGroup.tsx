@@ -474,7 +474,7 @@ const TopKSelector = React.memo(
 					return;
 				}
 				const numValue = parseInt(value, 10);
-				if (!isNaN(numValue) && numValue >= MIN_VALUE && numValue <= MAX_VALUE) {
+				if (!Number.isNaN(numValue) && numValue >= MIN_VALUE && numValue <= MAX_VALUE) {
 					onTopKChange?.(numValue);
 				}
 			},
@@ -490,7 +490,7 @@ const TopKSelector = React.memo(
 					return;
 				}
 				const numValue = parseInt(value, 10);
-				if (isNaN(numValue) || numValue < MIN_VALUE) {
+				if (Number.isNaN(numValue) || numValue < MIN_VALUE) {
 					onTopKChange?.(MIN_VALUE);
 				} else if (numValue > MAX_VALUE) {
 					onTopKChange?.(MAX_VALUE);

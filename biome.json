@@ -65,6 +65,11 @@
 		}
 	},
 	"css": {
+		"parser": {
+			"cssModules": false,
+			"allowWrongLineComments": false,
+			"tailwindDirectives": true
+		},
 		"formatter": {
 			"enabled": true,
 			"indentStyle": "tab",
@@ -85,6 +90,12 @@
 		}
 	},
 	"overrides": [
+		{
+			"includes": ["**/tailwind.css"],
+			"linter": {
+				"enabled": false
+			}
+		},
 		{
 			"includes": ["*.json", "*.jsonc"],
 			"json": {

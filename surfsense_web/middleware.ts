@@ -6,6 +6,6 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
 // Empty middleware - just pass through all requests
-export function middleware(request: NextRequest) {
+export function middleware(_request: NextRequest) {
 	return NextResponse.next();
 }

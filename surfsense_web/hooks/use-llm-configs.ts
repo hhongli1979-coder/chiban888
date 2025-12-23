@@ -88,7 +88,7 @@ export function useLLMConfigs(searchSpaceId: number | null) {
 
 	useEffect(() => {
 		fetchLLMConfigs();
-	}, [searchSpaceId]);
+	}, [fetchLLMConfigs]);
 
 	const createLLMConfig = async (config: CreateLLMConfig): Promise<LLMConfig | null> => {
 		try {
@@ -230,7 +230,7 @@ export function useLLMPreferences(searchSpaceId: number | null) {
 
 	useEffect(() => {
 		fetchPreferences();
-	}, [searchSpaceId]);
+	}, [fetchPreferences]);
 
 	const updatePreferences = async (newPreferences: Partial<LLMPreferences>): Promise<boolean> => {
 		if (!searchSpaceId) {
@@ -320,7 +320,7 @@ export function useGlobalLLMConfigs() {
 
 	useEffect(() => {
 		fetchGlobalConfigs();
-	}, []);
+	}, [fetchGlobalConfigs]);
 
 	return {
 		globalConfigs,

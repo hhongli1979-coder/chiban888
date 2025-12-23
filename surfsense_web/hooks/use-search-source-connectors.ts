@@ -59,6 +59,50 @@ export const useSearchSourceConnectors = (lazy: boolean = false, searchSpaceId?:
 		},
 	]);
 
+	// Update connector source items when connectors change
+	const updateConnectorSourceItems = useCallback(
+		(currentConnectors: SearchSourceConnector[]) => {
+			// Start with the default hardcoded connectors
+			const defaultConnectors: ConnectorSourceItem[] = [
+				{
+					id: 1,
+					name: "Crawled URL",
+					type: "CRAWLED_URL",
+					sources: [],
+				},
+				{
+					id: 2,
+					name: "File",
+					type: "FILE",
+					sources: [],
+				},
+				{
+					id: 3,
+					name: "Extension",
+					type: "EXTENSION",
+					sources: [],
+				},
+				{
+					id: 4,
+					name: "Youtube Video",
+					type: "YOUTUBE_VIDEO",
+					sources: [],
+				},
+			];
+
+			// Add the API connectors
+			const apiConnectors: ConnectorSourceItem[] = currentConnectors.map((connector, index) => ({
+				id: 1000 + index, // Use a high ID to avoid conflicts with hardcoded IDs
+				name: connector.name,
+				type: connector.connector_type,
+				sources: [],
+			}));
+
+			setConnectorSourceItems([...defaultConnectors, ...apiConnectors]);
+		},
+		[setConnectorSourceItems]
+	);
+
 	const fetchConnectors = useCallback(
 		async (spaceId?: number) => {
 			if (isLoaded && lazy) return; // Avoid redundant calls in lazy mode
@@ -107,7 +151,7 @@ export const useSearchSourceConnectors = (lazy: boolean = false, searchSpaceId?:
 				setIsLoading(false);
 			}
 		},
-		[isLoaded, lazy]
+		[isLoaded, lazy, updateConnectorSourceItems]
 	);
 
 	useEffect(() => {
@@ -124,47 +168,6 @@ export const useSearchSourceConnectors = (lazy: boolean = false, searchSpaceId?:
 		},
 		[fetchConnectors, searchSpaceId]
 	);
-
-	// Update connector source items when connectors change
-	const updateConnectorSourceItems = (currentConnectors: SearchSourceConnector[]) => {
-		// Start with the default hardcoded connectors
-		const defaultConnectors: ConnectorSourceItem[] = [
-			{
-				id: 1,
-				name: "Crawled URL",
-				type: "CRAWLED_URL",
-				sources: [],
-			},
-			{
-				id: 2,
-				name: "File",
-				type: "FILE",
-				sources: [],
-			},
-			{
-				id: 3,
-				name: "Extension",
-				type: "EXTENSION",
-				sources: [],
-			},
-			{
-				id: 4,
-				name: "Youtube Video",
-				type: "YOUTUBE_VIDEO",
-				sources: [],
-			},
-		];
-
-		// Add the API connectors
-		const apiConnectors: ConnectorSourceItem[] = currentConnectors.map((connector, index) => ({
-			id: 1000 + index, // Use a high ID to avoid conflicts with hardcoded IDs
-			name: connector.name,
-			type: connector.connector_type,
-			sources: [],
-		}));
-
-		setConnectorSourceItems([...defaultConnectors, ...apiConnectors]);
-	};
 
 	/**
 	 * Create a new search source connector

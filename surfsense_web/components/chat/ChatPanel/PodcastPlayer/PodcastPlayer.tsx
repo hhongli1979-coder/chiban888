@@ -1,6 +1,6 @@
 "use client";
 
-import { Pause, Play, SkipBack, SkipForward, Volume2, VolumeX, X } from "lucide-react";
+import { Pause, Play, SkipBack, SkipForward, Volume2, VolumeX } from "lucide-react";
 import { motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
@@ -125,7 +125,7 @@ export function PodcastPlayer({
 		}
 	};
 
-	const handleVolumeChange = (value: number[]) => {
+	const _handleVolumeChange = (value: number[]) => {
 		if (audioRef.current) {
 			const newVolume = value[0];
 			audioRef.current.volume = newVolume;

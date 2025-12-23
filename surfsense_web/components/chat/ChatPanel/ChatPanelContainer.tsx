@@ -25,7 +25,7 @@ export function ChatPanelContainer() {
 		try {
 			generatePodcast(request);
 			toast.success(`Podcast generation started!`);
-		} catch (error) {
+		} catch (_error) {
 			toast.error("Error generating podcast. Please try again later.");
 			console.error("Error generating podcast:", JSON.stringify(generatePodcastError));
 		}

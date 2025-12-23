@@ -1,15 +1,6 @@
 "use client";
 
-import {
-	ArrowRight,
-	Bot,
-	Brain,
-	CheckCircle,
-	FileText,
-	MessageSquare,
-	Sparkles,
-	Zap,
-} from "lucide-react";
+import { ArrowRight, CheckCircle, FileText, MessageSquare } from "lucide-react";
 import { motion } from "motion/react";
 import { useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
@@ -30,7 +21,7 @@ export function CompletionStep({ searchSpaceId }: CompletionStepProps) {
 	// Combine global and user-specific configs
 	const allConfigs = [...globalConfigs, ...llmConfigs];
 
-	const assignedConfigs = {
+	const _assignedConfigs = {
 		long_context: allConfigs.find((c) => c.id === preferences.long_context_llm_id),
 		fast: allConfigs.find((c) => c.id === preferences.fast_llm_id),
 		strategic: allConfigs.find((c) => c.id === preferences.strategic_llm_id),

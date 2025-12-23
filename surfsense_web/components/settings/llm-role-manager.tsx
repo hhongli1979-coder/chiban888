@@ -103,7 +103,7 @@ export function LLMRoleManager({ searchSpaceId }: LLMRoleManagerProps) {
 	const handleRoleAssignment = (role: string, configId: string) => {
 		const newAssignments = {
 			...assignments,
-			[role]: configId === "unassigned" ? "" : parseInt(configId),
+			[role]: configId === "unassigned" ? "" : parseInt(configId, 10),
 		};
 
 		setAssignments(newAssignments);
@@ -131,19 +131,19 @@ export function LLMRoleManager({ searchSpaceId }: LLMRoleManagerProps) {
 			long_context_llm_id:
 				typeof assignments.long_context_llm_id === "string"
 					? assignments.long_context_llm_id
-						? parseInt(assignments.long_context_llm_id)
+						? parseInt(assignments.long_context_llm_id, 10)
 						: undefined
 					: assignments.long_context_llm_id,
 			fast_llm_id:
 				typeof assignments.fast_llm_id === "string"
 					? assignments.fast_llm_id
-						? parseInt(assignments.fast_llm_id)
+						? parseInt(assignments.fast_llm_id, 10)
 						: undefined
 					: assignments.fast_llm_id,
 			strategic_llm_id:
 				typeof assignments.strategic_llm_id === "string"
 					? assignments.strategic_llm_id
-						? parseInt(assignments.strategic_llm_id)
+						? parseInt(assignments.strategic_llm_id, 10)
 						: undefined
 					: assignments.strategic_llm_id,
 		};

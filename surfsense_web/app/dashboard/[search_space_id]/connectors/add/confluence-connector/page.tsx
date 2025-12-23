@@ -92,7 +92,7 @@ export default function ConfluenceConnectorPage() {
 					indexing_frequency_minutes: null,
 					next_scheduled_at: null,
 				},
-				parseInt(searchSpaceId)
+				parseInt(searchSpaceId, 10)
 			);
 
 			toast.success("Confluence connector created successfully!");

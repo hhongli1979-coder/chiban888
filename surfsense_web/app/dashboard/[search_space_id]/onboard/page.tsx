@@ -112,7 +112,7 @@ const OnboardPage = () => {
 		preferences.strategic_llm_id;
 
 	// User can always proceed from step 2 to step 3 (prompt config is optional)
-	const canProceedToStep3 = true;
+	const _canProceedToStep3 = true;
 
 	const handleNext = () => {
 		if (currentStep < TOTAL_STEPS) {

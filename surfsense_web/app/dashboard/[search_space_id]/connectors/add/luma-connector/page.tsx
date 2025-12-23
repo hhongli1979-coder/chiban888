@@ -57,7 +57,7 @@ export default function LumaConnectorPage() {
 
 	const { fetchConnectors, createConnector } = useSearchSourceConnectors(
 		true,
-		parseInt(searchSpaceId)
+		parseInt(searchSpaceId, 10)
 	);
 
 	// Initialize the form
@@ -70,7 +70,7 @@ export default function LumaConnectorPage() {
 	});
 
 	useEffect(() => {
-		fetchConnectors(parseInt(searchSpaceId))
+		fetchConnectors(parseInt(searchSpaceId, 10))
 			.then((data) => {
 				if (data && Array.isArray(data)) {
 					const connector = data.find(
@@ -103,7 +103,7 @@ export default function LumaConnectorPage() {
 					indexing_frequency_minutes: null,
 					next_scheduled_at: null,
 				},
-				parseInt(searchSpaceId)
+				parseInt(searchSpaceId, 10)
 			);
 
 			toast.success("Luma connector created successfully!");

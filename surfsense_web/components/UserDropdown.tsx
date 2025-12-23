@@ -1,6 +1,6 @@
 "use client";
 
-import { BadgeCheck, LogOut, Settings } from "lucide-react";
+import { BadgeCheck, LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";

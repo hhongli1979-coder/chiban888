@@ -54,7 +54,7 @@ export function useConnectorEditPage(connectorId: number, searchSpaceId: string)
 		connectors,
 		updateConnector,
 		isLoading: connectorsLoading,
-	} = useSearchSourceConnectors(false, parseInt(searchSpaceId));
+	} = useSearchSourceConnectors(false, parseInt(searchSpaceId, 10));
 
 	// State managed by the hook
 	const [connector, setConnector] = useState<SearchSourceConnector | null>(null);

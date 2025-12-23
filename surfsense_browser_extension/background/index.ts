@@ -18,9 +18,9 @@ chrome.tabs.onUpdated.addListener(async (tabId: number, changeInfo: any, tab: an
 		await initQueues(tab.id);
 
 		const result = await chrome.scripting.executeScript({
-			// @ts-ignore
+			// @ts-expect-error
 			target: { tabId: tab.id },
-			// @ts-ignore
+			// @ts-expect-error
 			func: getRenderedHtml,
 		});
 
@@ -45,26 +45,22 @@ chrome.tabs.onUpdated.addListener(async (tabId: number, changeInfo: any, tab: an
 	}
 });
 
-chrome.tabs.onRemoved.addListener(async (tabId: number, removeInfo: object) => {
+chrome.tabs.onRemoved.addListener(async (tabId: number, _removeInfo: object) => {
 	const storage = new Storage({ area: "local" });
 	const urlQueueListObj: any = await storage.get("urlQueueList");
 	const timeQueueListObj: any = await storage.get("timeQueueList");
 	if (urlQueueListObj.urlQueueList && timeQueueListObj.timeQueueList) {
-		const urlQueueListToSave = urlQueueListObj.urlQueueList.map((element: WebHistory) => {
-			if (element.tabsessionId !== tabId) {
-				return element;
-			}
-		});
-		const timeQueueListSave = timeQueueListObj.timeQueueList.map((element: WebHistory) => {
-			if (element.tabsessionId !== tabId) {
-				return element;
-			}
-		});
+		const urlQueueListToSave = urlQueueListObj.urlQueueList.filter(
+			(element: WebHistory) => element.tabsessionId !== tabId
+		);
+		const timeQueueListSave = timeQueueListObj.timeQueueList.filter(
+			(element: WebHistory) => element.tabsessionId !== tabId
+		);
 		await storage.set("urlQueueList", {
-			urlQueueList: urlQueueListToSave.filter((item: any) => item),
+			urlQueueList: urlQueueListToSave,
 		});
 		await storage.set("timeQueueList", {
-			timeQueueList: timeQueueListSave.filter((item: any) => item),
+			timeQueueList: timeQueueListSave,
 		});
 	}
 });

@@ -72,7 +72,7 @@ export default function ClickUpConnectorPage() {
 				next_scheduled_at: null,
 			};
 
-			await createConnector(connectorData, parseInt(searchSpaceId));
+			await createConnector(connectorData, parseInt(searchSpaceId, 10));
 
 			toast.success("ClickUp connector created successfully!");
 			router.push(`/dashboard/${searchSpaceId}/connectors`);

@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowLeft, Check, CircleAlert, Github, Info, ListChecks, Loader2 } from "lucide-react";
+import { ArrowLeft, Check, CircleAlert, Info, ListChecks, Loader2 } from "lucide-react";
 import { motion } from "motion/react";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
@@ -162,7 +162,7 @@ export default function GithubConnectorPage() {
 					indexing_frequency_minutes: null,
 					next_scheduled_at: null,
 				},
-				parseInt(searchSpaceId)
+				parseInt(searchSpaceId, 10)
 			);
 
 			toast.success("GitHub connector created successfully!");

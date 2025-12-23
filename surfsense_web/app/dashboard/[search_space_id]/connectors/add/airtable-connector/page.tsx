@@ -30,10 +30,10 @@ export default function AirtableConnectorPage() {
 	const [isConnecting, setIsConnecting] = useState(false);
 	const [doesConnectorExist, setDoesConnectorExist] = useState(false);
 
-	const { fetchConnectors } = useSearchSourceConnectors(true, parseInt(searchSpaceId));
+	const { fetchConnectors } = useSearchSourceConnectors(true, parseInt(searchSpaceId, 10));
 
 	useEffect(() => {
-		fetchConnectors(parseInt(searchSpaceId)).then((data) => {
+		fetchConnectors(parseInt(searchSpaceId, 10)).then((data) => {
 			const connector = data.find(
 				(c: SearchSourceConnector) => c.connector_type === EnumConnectorName.AIRTABLE_CONNECTOR
 			);
@@ -41,7 +41,7 @@ export default function AirtableConnectorPage() {
 				setDoesConnectorExist(true);
 			}
 		});
-	}, []);
+	}, [fetchConnectors, searchSpaceId]);
 
 	const handleConnectAirtable = async () => {
 		setIsConnecting(true);

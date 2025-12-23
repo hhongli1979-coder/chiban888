@@ -62,7 +62,7 @@ const HomePage = () => {
 					console.log(res);
 					setSearchSpaces(res);
 				}
-			} catch (error) {
+			} catch (_error) {
 				await storage.remove("token");
 				await storage.remove("showShadowDom");
 				navigation("/login");
@@ -71,12 +71,12 @@ const HomePage = () => {
 
 		checkSearchSpaces();
 		setLoading(false);
-	}, []);
+	}, [navigation]);
 
 	useEffect(() => {
 		async function onLoad() {
 			try {
-				chrome.storage.onChanged.addListener((changes: any, areaName: string) => {
+				chrome.storage.onChanged.addListener((changes: any, _areaName: string) => {
 					if (changes.webhistory) {
 						const webhistory = JSON.parse(changes.webhistory.newValue);
 						console.log("webhistory", webhistory);
@@ -136,42 +136,27 @@ const HomePage = () => {
 			//Main Cleanup COde
 			chrome.tabs.query({}, async (tabs) => {
 				//Get Active Tabs Ids
-				let actives = tabs.map((tab) => {
-					if (tab.id) {
-						return tab.id;
-					}
-				});
-
-				actives = actives.filter((item: any) => item);
+				const actives = tabs.map((tab) => tab.id).filter((item) => item !== undefined);
 
 				//Only retain which is still active
-				const newHistory = webHistory.webhistory.map((element: any) => {
-					//@ts-ignore
-					if (actives.includes(element.tabsessionId)) {
-						return element;
-					}
-				});
+				const newHistory = webHistory.webhistory.filter((element: any) =>
+					actives.includes(element.tabsessionId)
+				);
 
-				const newUrlQueue = urlQueue.urlQueueList.map((element: any) => {
-					//@ts-ignore
-					if (actives.includes(element.tabsessionId)) {
-						return element;
-					}
-				});
+				const newUrlQueue = urlQueue.urlQueueList.filter((element: any) =>
+					actives.includes(element.tabsessionId)
+				);
 
-				const newTimeQueue = timeQueue.timeQueueList.map((element: any) => {
-					//@ts-ignore
-					if (actives.includes(element.tabsessionId)) {
-						return element;
-					}
-				});
+				const newTimeQueue = timeQueue.timeQueueList.filter((element: any) =>
+					actives.includes(element.tabsessionId)
+				);
 
-				await storage.set("webhistory", { webhistory: newHistory.filter((item: any) => item) });
+				await storage.set("webhistory", { webhistory: newHistory });
 				await storage.set("urlQueueList", {
-					urlQueueList: newUrlQueue.filter((item: any) => item),
+					urlQueueList: newUrlQueue,
 				});
 				await storage.set("timeQueueList", {
-					timeQueueList: newTimeQueue.filter((item: any) => item),
+					timeQueueList: newTimeQueue,
 				});
 				toast({
 					title: "History store cleared",
@@ -191,9 +176,9 @@ const HomePage = () => {
 			if (tab.id) {
 				const tabId: number = tab.id;
 				const result = await chrome.scripting.executeScript({
-					// @ts-ignore
+					// @ts-expect-error
 					target: { tabId: tab.id },
-					// @ts-ignore
+					// @ts-expect-error
 					func: getRenderedHtml,
 				});
 
@@ -217,7 +202,7 @@ const HomePage = () => {
 
 				delete toPushInTabHistory.renderedHtml;
 
-				const tabhistory = webHistoryOfTabId[0].tabHistory;
+				const _tabhistory = webHistoryOfTabId[0].tabHistory;
 
 				const urlQueueListObj: any = await storage.get("urlQueueList");
 				const timeQueueListObj: any = await storage.get("timeQueueList");
@@ -279,14 +264,14 @@ const HomePage = () => {
 
 		try {
 			const resp = await sendToBackground({
-				// @ts-ignore
+				// @ts-expect-error
 				name: "savedata",
 			});
 
 			toast({
 				title: resp.message,
 			});
-		} catch (error) {
+		} catch (_error) {
 			toast({
 				title: "Error saving data",
 				description: "Please try again",

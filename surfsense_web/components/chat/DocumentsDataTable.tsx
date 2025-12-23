@@ -247,7 +247,9 @@ export function DocumentsDataTable({
 	// Maintain a separate state for actually selected documents (across all pages)
 	const [selectedDocumentsMap, setSelectedDocumentsMap] = useState<Map<number, Document>>(() => {
 		const map = new Map<number, Document>();
-		initialSelectedDocuments.forEach((doc) => map.set(doc.id, doc));
+		initialSelectedDocuments.forEach((doc) => {
+			map.set(doc.id, doc);
+		});
 		return map;
 	});
 
@@ -268,7 +270,7 @@ export function DocumentsDataTable({
 		}
 
 		setRowSelection(initialRowSelection);
-	}, [initialRowSelection]); // Remove rowSelection from dependencies to prevent loop
+	}, [initialRowSelection, rowSelection]); // Remove rowSelection from dependencies to prevent loop
 
 	// Update the selected documents map when row selection changes
 	useEffect(() => {
