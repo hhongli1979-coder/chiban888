@@ -66,6 +66,12 @@ Want to fix it? Go for it! Just link the issue in your PR.
 
 For detailed setup instructions, refer to our [Installation Guide](https://www.surfsense.net/docs/).
 
+### 🤖 AI Coding Assistants
+
+Consider using AI-powered development tools to accelerate your workflow:
+
+- **[Claude Code](./docs/claude-code-guide.md)** - Agentic coding tool from Anthropic that understands your codebase and helps with routine tasks, code explanations, and git workflows through natural language commands.
+
 ## 🏗️ Project Structure
 
 SurfSense consists of three main components:
