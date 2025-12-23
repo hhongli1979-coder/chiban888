@@ -1,0 +1,163 @@
+# Example Docker Compose configuration using GitHub Packages
+# This demonstrates how to use pre-built images from GitHub Container Registry
+
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: surfsense_postgres
+    environment:
+      POSTGRES_DB: surfsense
+      POSTGRES_USER: surfsense
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-changeme}
+      POSTGRES_HOST_AUTH_METHOD: md5
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U surfsense"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis for Celery
+  redis:
+    image: redis:7-alpine
+    container_name: surfsense_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # SurfSense Backend from GitHub Packages
+  backend:
+    image: ghcr.io/hhongli1979-coder/surfsense_backend:latest
+    container_name: surfsense_backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      # Database Configuration
+      DATABASE_URL: postgresql://surfsense:${DB_PASSWORD:-changeme}@postgres:5432/surfsense
+      
+      # Redis Configuration
+      REDIS_URL: redis://redis:6379/0
+      
+      # API Configuration
+      API_HOST: 0.0.0.0
+      API_PORT: 8000
+      
+      # Add your other environment variables here
+      # SECRET_KEY: ${SECRET_KEY}
+      # OPENAI_API_KEY: ${OPENAI_API_KEY}
+      # etc.
+    ports:
+      - "8000:8000"
+    volumes:
+      - backend_data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # SurfSense Frontend from GitHub Packages
+  frontend:
+    image: ghcr.io/hhongli1979-coder/surfsense_web:latest
+    container_name: surfsense_frontend
+    depends_on:
+      - backend
+    environment:
+      # Backend API URL
+      NEXT_PUBLIC_API_URL: http://localhost:8000
+      
+      # Add your other environment variables here
+      # NEXT_PUBLIC_GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      # etc.
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Celery Worker (optional, if needed)
+  celery_worker:
+    image: ghcr.io/hhongli1979-coder/surfsense_backend:latest
+    container_name: surfsense_celery_worker
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      DATABASE_URL: postgresql://surfsense:${DB_PASSWORD:-changeme}@postgres:5432/surfsense
+      REDIS_URL: redis://redis:6379/0
+    command: celery -A celery_worker worker --loglevel=info
+    restart: unless-stopped
+
+  # Flower for monitoring Celery (optional)
+  flower:
+    image: ghcr.io/hhongli1979-coder/surfsense_backend:latest
+    container_name: surfsense_flower
+    depends_on:
+      - redis
+      - celery_worker
+    environment:
+      CELERY_BROKER_URL: redis://redis:6379/0
+      CELERY_RESULT_BACKEND: redis://redis:6379/0
+    command: celery -A celery_worker flower --port=5555
+    ports:
+      - "5555:5555"
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  backend_data:
+    driver: local
+
+networks:
+  default:
+    name: surfsense_network
+    driver: bridge
+
+# Usage Instructions:
+# 
+# 1. Authenticate with GitHub Container Registry:
+#    echo $GITHUB_TOKEN | docker login ghcr.io -u YOUR_USERNAME --password-stdin
+#
+# 2. Copy this file to docker-compose.yml in your project
+#
+# 3. Create a .env file with your configuration (optional):
+#    DB_PASSWORD=your_secure_password
+#    SECRET_KEY=your_secret_key
+#    # Add other required environment variables
+#
+# 4. Pull the latest images:
+#    docker-compose pull
+#
+# 5. Start the services:
+#    docker-compose up -d
+#
+# 6. View logs:
+#    docker-compose logs -f
+#
+# 7. Stop the services:
+#    docker-compose down
+#
+# 8. Stop and remove volumes (WARNING: deletes all data):
+#    docker-compose down -v
